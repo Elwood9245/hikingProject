@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ route.name }}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ route.name }}</h1>
+        <p>{{ route.description }}</p>
+        <p><strong>Location:</strong> {{ route.location }}</p>
+
+        <h2>Comments</h2>
+        <ul class="comment-list">
+            {% for comment in comments %}
+                <li class="comment-item">{{ comment.user.username }}: {{ comment.content }}</li>
+            {% empty %}
+                <p>No comments yet.</p>
+            {% endfor %}
+        </ul>
+
+        {% if user.is_authenticated %}
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Add Comment</button>
+            </form>
+        {% else %}
+            <p><a href="{% url 'login' %}">Log in</a> to add a comment.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hikit - Home</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hikit - Hiking Routes</h1>
+            <nav>
+                {% if user.is_authenticated %}
+                    <span>Welcome, {{ user.username }}!</span>
+                    <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a> |
+                    <a href="{% url 'register' %}">Register</a>
+                {% endif %}
+            </nav>
+        </header>
+
+        <ul class="route-list">
+            {% for route in routes %}
+                <li class="route-item">
+                    <a href="{% url 'route_detail' route.id %}" class="route-link">{{ route.name }}</a>
+                    <p class="route-description">{{ route.description }}</p>
+                    <p class="route-location"><strong>Location:</strong> {{ route.location }}</p>
+                </li>
+            {% empty %}
+                <p>No hiking routes available yet.</p>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
