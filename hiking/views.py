@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .models import Route, Event, Comment
-from .forms import CommentForm, EventForm
+from .forms import CommentForm, EventForm, RouteForm
 
 
 def home(request):
@@ -41,7 +41,6 @@ def create_event(request, route_id):
         form = EventForm()
     return render(request, 'hiking/create_event.html', {'form': form, 'route': route})
 
-
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -52,3 +51,14 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+@login_required
+def add_route(request):
+    if request.method == 'POST':
+        form = RouteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  # 添加成功后跳转到主页
+    else:
+        form = RouteForm()
+    return render(request, 'hiking/add_route.html', {'form': form})

@@ -9,4 +9,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
 ]
 
-
+urlpatterns += [
+    path('add-route/', views.add_route, name='add_route'),
+]
