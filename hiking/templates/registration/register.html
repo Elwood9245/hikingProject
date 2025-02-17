@@ -43,7 +43,7 @@
     <div class="auth-container">
         <!-- 带图标的标题 -->
         <h1 class="text-center mb-4 display-4 text-primary">
-            <i class="bi bi-person-arms-up"></i> 创建账户
+            <i class="bi bi-person-arms-up"></i> Register
         </h1>
 
         <form method="POST" class="needs-validation" novalidate>
@@ -64,7 +64,7 @@
                     <!-- 密码字段的特殊处理 -->
                     {% if field.name == "password1" %}
                         <div class="password-requirements">
-                            密码要求：至少8字符，包含数字和字母
+                            Requirement: At least 8 characters, including numbers and letters.
                         </div>
                     {% endif %}
 
@@ -81,14 +81,14 @@
             <!-- 主操作按钮组 -->
             <div class="d-grid gap-3 mt-5">
                 <button type="submit" class="btn btn-register btn-lg text-white">
-                    <i class="bi bi-check2-circle"></i> 立即注册
+                    <i class="bi bi-check2-circle"></i> Register now
                 </button>
                 
                 <!-- 已有账户链接 -->
                 <div class="text-center mt-3">
-                    <p class="text-muted">已有账户？
+                    <p class="text-muted">Already have an account?
                         <a href="{% url 'login' %}" class="text-decoration-none fw-bold text-primary">
-                            <i class="bi bi-box-arrow-in-right"></i> 直接登录
+                            <i class="bi bi-box-arrow-in-right"></i> Log in
                         </a>
                     </p>
                 </div>

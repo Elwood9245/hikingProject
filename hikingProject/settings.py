@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
 ]
 
+LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 MIDDLEWARE = [
