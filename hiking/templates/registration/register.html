@@ -1,20 +1,104 @@
+{% load widget_tweaks %}  <!-- 确保这行在首行 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <title>Register - Hiking Planner</title>
+    <!-- Bootstrap 5 核心样式 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 自定义注册页样式 -->
+    <style>
+        .auth-container {
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 2.5rem;
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        .form-label {
+            font-weight: 500;
+            color: #34495e;
+            margin-bottom: 0.5rem;
+        }
+        .btn-register {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border: none;
+            padding: 12px 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(52,152,219,0.3);
+        }
+        .password-requirements {
+            font-size: 0.875rem;
+            color: #7f8c8d;
+            margin-top: 0.5rem;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Register</h1>
-        <form method="POST">
+<body class="bg-light" style="background-image: url('static/mountain-bg.jpg'); background-size: cover;">
+    <div class="auth-container">
+        <!-- 带图标的标题 -->
+        <h1 class="text-center mb-4 display-4 text-primary">
+            <i class="bi bi-person-arms-up"></i> 创建账户
+        </h1>
+
+        <form method="POST" class="needs-validation" novalidate>
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Register</button>
+            
+            <div class="row g-4">
+                <!-- 循环处理每个表单字段 -->
+                {% for field in form %}
+                <div class="col-12">
+                    <label for="{{ field.id_for_label }}" class="form-label">
+                        {{ field.label }}
+                        {% if field.field.required %}<span class="text-danger">*</span>{% endif %}
+                    </label>
+                    
+                    <!-- 添加Bootstrap样式到输入框 -->
+                    {% render_field field class="form-control form-control-lg" %}
+                    
+                    <!-- 密码字段的特殊处理 -->
+                    {% if field.name == "password1" %}
+                        <div class="password-requirements">
+                            密码要求：至少8字符，包含数字和字母
+                        </div>
+                    {% endif %}
+
+                    <!-- 错误提示 -->
+                    {% for error in field.errors %}
+                        <div class="invalid-feedback d-block">
+                            <i class="bi bi-exclamation-circle"></i> {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- 主操作按钮组 -->
+            <div class="d-grid gap-3 mt-5">
+                <button type="submit" class="btn btn-register btn-lg text-white">
+                    <i class="bi bi-check2-circle"></i> 立即注册
+                </button>
+                
+                <!-- 已有账户链接 -->
+                <div class="text-center mt-3">
+                    <p class="text-muted">已有账户？
+                        <a href="{% url 'login' %}" class="text-decoration-none fw-bold text-primary">
+                            <i class="bi bi-box-arrow-in-right"></i> 直接登录
+                        </a>
+                    </p>
+                </div>
+            </div>
         </form>
-        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
     </div>
+
+    <!-- Bootstrap 脚本 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 </body>
 </html>
